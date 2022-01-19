@@ -1,10 +1,15 @@
 package com.example
 
+import com.example.data.collections.User
+import com.example.data.registerUser
 import com.google.gson.Gson
 import io.ktor.application.*
 import io.ktor.features.*
 import io.ktor.gson.*
 import io.ktor.routing.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 /**
  * Intancia de nuestro servidor
@@ -31,6 +36,11 @@ fun Application.module(testing: Boolean = false) {
         gson {
             setPrettyPrinting()//pa verse bonitos los json
         }
+    }
+    CoroutineScope(Dispatchers.IO).launch{
+        registerUser(
+            User("andres@los.com","1234")
+        )
     }
 
 }
