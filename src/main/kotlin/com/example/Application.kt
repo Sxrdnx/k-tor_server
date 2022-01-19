@@ -2,6 +2,7 @@ package com.example
 
 import com.example.data.collections.User
 import com.example.data.registerUser
+import com.example.routes.registerRoute
 import com.google.gson.Gson
 import io.ktor.application.*
 import io.ktor.features.*
@@ -31,16 +32,12 @@ fun Application.module(testing: Boolean = false) {
      */
     install(DefaultHeaders)
     install(CallLogging)
-    install(Routing)
+    install(Routing){
+        registerRoute()// configuracion necesaria para que nuestra ruta esta disponible
+    }
     install(ContentNegotiation){
         gson {
             setPrettyPrinting()//pa verse bonitos los json
         }
     }
- /*   CoroutineScope(Dispatchers.IO).launch{
-        registerUser(
-            User("andres@los.com","1234")
-        )
-    }*/
-
 }
