@@ -1,10 +1,13 @@
 package com.example
 
 
+import com.example.data.checkPassworForEmail
 import com.example.routes.loginRoute
+import com.example.routes.noteRoutes
 import com.example.routes.registerRoute
 
 import io.ktor.application.*
+import io.ktor.auth.*
 import io.ktor.features.*
 import io.ktor.gson.*
 import io.ktor.routing.*
@@ -30,13 +33,34 @@ fun Application.module(testing: Boolean = false) {
      */
     install(DefaultHeaders)
     install(CallLogging)
-    install(Routing){
-        registerRoute()// configuracion necesaria para que nuestra ruta esta disponible
-        loginRoute()
-    }
     install(ContentNegotiation){
         gson {
             setPrettyPrinting()//pa verse bonitos los json
         }
     }
+    install(Authentication){
+        configureAuth()
+    }
+
+    install(Routing){
+        registerRoute()// configuracion necesaria para que nuestra ruta esta disponible
+        loginRoute()
+        noteRoutes()
+    }
+}
+
+
+private fun Authentication.Configuration.configureAuth(){
+    basic {
+        realm = "Note Server" //nombre del servidor
+        validate { credentials ->
+            //definimos la logica para autentificar el accesos a nuestras apis
+            val email = credentials.name
+            val password = credentials.password
+            if (checkPassworForEmail(email,password)){
+                UserIdPrincipal(email)
+            }else null
+        }
+    }
+
 }

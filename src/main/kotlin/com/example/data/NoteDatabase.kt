@@ -2,6 +2,7 @@ package com.example.data
 
 import com.example.data.collections.Note
 import com.example.data.collections.User
+import org.litote.kmongo.contains
 import org.litote.kmongo.coroutine.coroutine
 import org.litote.kmongo.eq
 import org.litote.kmongo.reactivestreams.KMongo
@@ -28,6 +29,10 @@ suspend fun checkIfUSerExists(email: String): Boolean{
 suspend fun checkPassworForEmail(email: String,passwordToCheck: String): Boolean{
     val actualPassword = users.findOne(User::email eq email)?.password ?: return  false
     return actualPassword == passwordToCheck
+}
+
+suspend fun getNotesForUser(email: String): List<Note>{
+    return notes.find(Note::owners contains email).toList()
 }
 
 //dado que todas las acciones son mediante corutinas debemos envolver la funcion en otra suspernd fun
