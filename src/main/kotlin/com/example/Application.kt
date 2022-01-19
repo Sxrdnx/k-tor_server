@@ -37,10 +37,10 @@ fun Application.module(testing: Boolean = false) {
             setPrettyPrinting()//pa verse bonitos los json
         }
     }
-    CoroutineScope(Dispatchers.IO).launch{
+ /*   CoroutineScope(Dispatchers.IO).launch{
         registerUser(
             User("andres@los.com","1234")
         )
-    }
+    }*/
 
 }
