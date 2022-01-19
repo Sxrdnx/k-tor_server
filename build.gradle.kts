@@ -5,6 +5,15 @@ val logback_version: String by project
 plugins {
     application
     kotlin("jvm") version "1.6.10"
+    id("com.github.johnrengelman.shadow") version "7.0.0"
+}
+
+tasks{
+    shadowJar {
+        manifest {
+            attributes(Pair("Main-Class", "io.ktor.server.netty.EngineMain"))
+        }
+    }
 }
 
 group = "com.example"
@@ -12,6 +21,7 @@ version = "0.0.1"
 application {
     mainClass.set("io.ktor.server.netty.EngineMain")
 }
+
 
 repositories {
     mavenCentral()
@@ -31,5 +41,4 @@ dependencies {
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
     implementation ("commons-codec:commons-codec:1.15")
     implementation ("io.ktor:ktor-network-tls:$ktor_version")
-
 }

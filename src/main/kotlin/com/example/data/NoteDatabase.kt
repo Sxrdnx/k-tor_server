@@ -24,6 +24,12 @@ suspend fun checkIfUSerExists(email: String): Boolean{
     return  users.findOne(User::email eq email) != null
 }
 
+
+suspend fun checkPassworForEmail(email: String,passwordToCheck: String): Boolean{
+    val actualPassword = users.findOne(User::email eq email)?.password ?: return  false
+    return actualPassword == passwordToCheck
+}
+
 //dado que todas las acciones son mediante corutinas debemos envolver la funcion en otra suspernd fun
 /*fun registerUser(user: User):Boolean {
     return database.getCollection<User>().insertOne(user).wasAcknowledged()

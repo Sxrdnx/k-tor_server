@@ -1,16 +1,13 @@
 package com.example
 
-import com.example.data.collections.User
-import com.example.data.registerUser
+
+import com.example.routes.loginRoute
 import com.example.routes.registerRoute
-import com.google.gson.Gson
+
 import io.ktor.application.*
 import io.ktor.features.*
 import io.ktor.gson.*
 import io.ktor.routing.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 /**
  * Intancia de nuestro servidor
@@ -18,6 +15,7 @@ import kotlinx.coroutines.launch
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
 @Suppress("unused") // application.conf references the main function. This annotation prevents the IDE from marking it as unused.
+@JvmOverloads
 fun Application.module(testing: Boolean = false) {
     /**
      * Funcion de extencion que extiende de application y se coloca la configuracion del servidor llamando a
@@ -34,6 +32,7 @@ fun Application.module(testing: Boolean = false) {
     install(CallLogging)
     install(Routing){
         registerRoute()// configuracion necesaria para que nuestra ruta esta disponible
+        loginRoute()
     }
     install(ContentNegotiation){
         gson {
