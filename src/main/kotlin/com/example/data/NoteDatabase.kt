@@ -55,6 +55,16 @@ suspend fun deleteNoteForUser(email: String,noteID:String): Boolean{
         return notes.deleteOneById(note.id).wasAcknowledged()
     } ?: return false
 }
+
+suspend fun isOwnerOfNote(noteID: String, owner: String): Boolean {
+    val note = notes.findOneById(noteID) ?: return false
+    return owner in note.owners
+}
+
+suspend fun addOwnerToNote(noteID: String, owner: String): Boolean {
+    val owners = notes.findOneById(noteID)?.owners ?: return false
+    return notes.updateOneById(noteID, setValue(Note::owners, owners + owner)).wasAcknowledged()
+}
 //dado que todas las acciones son mediante corutinas debemos envolver la funcion en otra suspernd fun
 /*fun registerUser(user: User):Boolean {
     return database.getCollection<User>().insertOne(user).wasAcknowledged()
