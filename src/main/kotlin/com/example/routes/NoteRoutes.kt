@@ -8,7 +8,6 @@ import com.example.data.requests.SimpleResponse
 import io.ktor.application.*
 import io.ktor.auth.*
 import io.ktor.features.ContentTransformationException
-import io.ktor.http.*
 import io.ktor.http.HttpStatusCode.Companion.BadRequest
 import io.ktor.http.HttpStatusCode.Companion.Conflict
 import io.ktor.http.HttpStatusCode.Companion.OK
@@ -55,7 +54,6 @@ fun Route.noteRoutes(){
                     call.respond(BadRequest)
                     return@post
                 }
-
                 if (saveNote(note)){
                     call.respond(OK)
                 }else{
