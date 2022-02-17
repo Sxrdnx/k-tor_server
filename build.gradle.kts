@@ -8,14 +8,6 @@ plugins {
     id("com.github.johnrengelman.shadow") version "7.0.0"
 }
 
-tasks{
-    shadowJar {
-        manifest {
-            attributes(Pair("Main-Class", "io.ktor.server.netty.EngineMain"))
-        }
-    }
-}
-
 group = "com.example"
 version = "0.0.1"
 application {
