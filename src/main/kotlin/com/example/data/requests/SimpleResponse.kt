@@ -1,6 +1,6 @@
 package com.example.data.requests
 
 data class SimpleResponse(
-    val succesful : Boolean,
+    val successful : Boolean,
     val message: String
 )
