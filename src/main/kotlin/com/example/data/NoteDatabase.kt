@@ -2,6 +2,7 @@ package com.example.data
 
 import com.example.data.collections.Note
 import com.example.data.collections.User
+import com.example.security.checHashForPassword
 import org.litote.kmongo.contains
 import org.litote.kmongo.coroutine.coroutine
 import org.litote.kmongo.eq
@@ -29,7 +30,7 @@ suspend fun checkIfUSerExists(email: String): Boolean{
 
 suspend fun checkPassworForEmail(email: String,passwordToCheck: String): Boolean{
     val actualPassword = users.findOne(User::email eq email)?.password ?: return  false
-    return actualPassword == passwordToCheck
+    return checHashForPassword(passwordToCheck,actualPassword)
 }
 
 suspend fun getNotesForUser(email: String): List<Note>{
